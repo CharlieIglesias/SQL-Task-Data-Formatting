@@ -1,0 +1,46 @@
+-- SQL Server Task Data Table Formatting
+
+-- 1. Create the Task_Data database if it doesn't exist
+IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = 'Task_Data')
+BEGIN
+    CREATE DATABASE Task_Data;
+END
+GO
+
+-- 2. Switch to the Task_Data database
+USE Task_Data;
+GO
+
+-- 3. Create the TeamTaskData table if it doesn't exist
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'TeamTaskData')
+BEGIN
+    CREATE TABLE TeamTaskData (
+        ID INT IDENTITY(1,1) PRIMARY KEY,
+        Agent NVARCHAR(100),
+        Date DATETIME,
+        Task NVARCHAR(MAX),
+        TaskDescription NVARCHAR(MAX),
+        Pass INT,
+        Fail INT
+    );
+END
+GO
+
+-- 4. Create a SQL login for Excel (if it doesn't exist)
+IF NOT EXISTS (SELECT * FROM sys.server_principals WHERE name = 'ExcelUser')
+BEGIN
+    CREATE LOGIN ExcelUser WITH PASSWORD = 'StrongPasswordHere';
+END
+GO
+
+-- 5. Create a database user for the login (if it doesn't exist)
+IF NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = 'ExcelUser')
+BEGIN
+    CREATE USER ExcelUser FOR LOGIN ExcelUser;
+END
+GO
+
+-- 6. Grant read and write permissions to the user
+ALTER ROLE db_datareader ADD MEMBER ExcelUser;  -- Read permissions
+ALTER ROLE db_datawriter ADD MEMBER ExcelUser;  -- Write permissions
+GO
