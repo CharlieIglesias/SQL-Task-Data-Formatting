@@ -29,7 +29,7 @@ GO
 -- 4. Create a SQL login for Excel (if it doesn't exist)
 IF NOT EXISTS (SELECT * FROM sys.server_principals WHERE name = 'ExcelUser')
 BEGIN
-    CREATE LOGIN ExcelUser WITH PASSWORD = 'StrongPasswordHere';
+    CREATE LOGIN ExcelUser WITH PASSWORD = 'Password1';
 END
 GO
 
