@@ -1,4 +1,4 @@
-# SQL Server – Task_Data Setup for Team Task Data
+# SQL Server - Task Data Formatting and Initalisation
 
 ## Overview
 This SQL script sets up the **Task_Data** SQL Server database and a secure **TeamTaskData** table for storing departmental operational data. It also creates a dedicated SQL login and database user for Excel to connect and read/write data safely. The solution provides a centralised, secure repository that supports downstream Excel reporting for productivity, utilisation, and capacity metrics.
